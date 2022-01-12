@@ -40,7 +40,7 @@ namespace simplex::sdl
     {
         if(event->type == SDL_MOUSEMOTION)
         {
-            mouseEventType == MouseEventType::Move;
+            mouseEventType = MouseEventType::Move;
             timestamp = event->motion.timestamp;
             windowID = event->motion.windowID;
             x = event->motion.x;
