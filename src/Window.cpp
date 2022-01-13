@@ -42,10 +42,10 @@ namespace simplex::sdl
 
     Window::Window(string title, int width, int height, bool resizable, bool showFrame)
     {
-        if(showFrame)
-            window = SDL_CreateWindow(title.toCString(), 0, 0, width, height, SDL_WINDOW_SHOWN);
-        else if(showFrame && resizable)
+        if(showFrame && resizable)
             window = SDL_CreateWindow(title.toCString(), 0, 0, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+        else if(showFrame)
+            window = SDL_CreateWindow(title.toCString(), 0, 0, width, height, SDL_WINDOW_SHOWN);
         else
             window = SDL_CreateWindow(title.toCString(), 0, 0, width, height, SDL_WINDOW_BORDERLESS);
     }
