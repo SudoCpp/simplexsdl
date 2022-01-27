@@ -48,6 +48,7 @@ namespace simplex::sdl
         public:
         static Window& CreateWindow(string title);
         static Window& CreateWindow(string title, int width, int height, bool resizable);
+        static void Sleep(uint32_t milliseconds);
         
         ~Framework();
         static Event* GetEvent();

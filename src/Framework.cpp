@@ -43,7 +43,7 @@ namespace simplex::sdl
 {
     Framework* Framework::instance = nullptr;
 
-    Framework::Framework() : Singleton(this), event{nullptr}
+    Framework::Framework() : event{nullptr}
     {
         if(SDL_Init(SDL_INIT_VIDEO) < 0)
             throw Exception("SDL2 could not be initialized: "+ string{SDL_GetError()}, __ExceptionParams__);
@@ -81,6 +81,11 @@ namespace simplex::sdl
         Window* window = new Window(title, width, height, resizable);
         instance.windows.add(window);
         return *window;
+    }
+
+    void Framework::Sleep(uint32_t milliseconds)
+    {
+        SDL_Delay(milliseconds);
     }
 
     Event* Framework::GetEvent()
