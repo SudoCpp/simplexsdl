@@ -1,21 +1,17 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(simplexsdl VERSION 1.0.0)
 
-find_package(SDL2 REQUIRED)
+#Debian Packages required
+# libsdl2-dev
+# libsdl2-ttf-dev
 
-set(SubDirectories
-    simplextk
+set(Packages
+    SDL2
     )
 
-foreach(SubDirectory IN LISTS SubDirectories)
-    if(NOT TARGET ${SubDirectory})
-        add_subdirectory("../${SubDirectory}" ${SubDirectory})
-    endif()
-endforeach()
-
-include_directories("include")
-include_directories("..")
-include_directories(${SDL2_INCLUDE_DIRS})
+set(SubProjects
+    simplextk
+    ) 
 
 set(SourceFiles
     src/CMYColor.cpp
@@ -32,7 +28,23 @@ set(SourceFiles
     src/WindowEvent.cpp
     )
 
-if(NOT TARGET ${PROJECT_NAME})
-    add_library(${PROJECT_NAME} SHARED ${SourceFiles})
-    target_link_libraries(${PROJECT_NAME} simplextk ${SDL2_LIBRARIES} "-lSDL2_ttf")
-endif()
+    if(NOT TARGET ${PROJECT_NAME})
+        add_library(${PROJECT_NAME} SHARED ${SourceFiles})
+
+        include_directories("include")
+        foreach(Package IN LISTS Packages)
+            find_package(${Package} REQUIRED)
+            include_directories(${${Package}_INCLUDE_DIRS})
+            target_link_libraries(${PROJECT_NAME} ${${Package}_LIBRARIES})
+        endforeach()
+
+        foreach(Project IN LISTS SubProjects)
+            if(NOT TARGET ${Project})
+                add_subdirectory("../${Project}")
+            endif()
+            include_directories("../${Project}")
+            target_link_libraries(${PROJECT_NAME} ${Project})
+        endforeach()
+    endif()
+
+target_link_libraries(${PROJECT_NAME} "-lSDL2_ttf")
