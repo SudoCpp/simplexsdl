@@ -42,7 +42,7 @@ namespace simplex::sdl
     font{TTF_OpenFont(fontName.toCString(), fontPtSize)}, fontPtSize{fontPtSize}
     {
         if(font == nullptr)
-            throw Exception(TTF_GetError(), __ExceptionParams__);
+            throw Exception(string{"Font error: "}+TTF_GetError(), __ExceptionParams__);
     }
 
     Font::~Font()
