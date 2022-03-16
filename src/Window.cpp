@@ -35,12 +35,12 @@
 
 namespace simplex::sdl
 {
-    Window::Window(string title)
+    Window::Window(string title) : renderers{true}
     {
         window = SDL_CreateWindow(title.toCString(), 0, 0, 640, 480, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     }
 
-    Window::Window(string title, int width, int height, bool resizable, bool showFrame)
+    Window::Window(string title, int width, int height, bool resizable, bool showFrame) : renderers{true}
     {
         if(showFrame && resizable)
             window = SDL_CreateWindow(title.toCString(), 0, 0, width, height, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
@@ -52,8 +52,6 @@ namespace simplex::sdl
 
     Window::~Window()
     {
-        for(Renderer* renderer : renderers)
-            delete renderer;
         SDL_DestroyWindow(window);
     }
 

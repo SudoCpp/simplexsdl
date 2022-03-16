@@ -43,7 +43,7 @@ namespace simplex::sdl
 {
     Framework* Framework::instance = nullptr;
 
-    Framework::Framework() : event{nullptr}
+    Framework::Framework() : windows{true}, event{nullptr}
     {
         if(SDL_Init(SDL_INIT_VIDEO) < 0)
             throw Exception("SDL2 could not be initialized: "+ string{SDL_GetError()}, __ExceptionParams__);
@@ -53,9 +53,6 @@ namespace simplex::sdl
 
     Framework::~Framework()
     {
-        for(Window* window : windows)
-            delete window;
-
         TTF_Quit();
         SDL_Quit();
     }
